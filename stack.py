@@ -64,6 +64,26 @@ class Istack:
 		while not self.is_empty():
 			postList.append(self.pop())
 			print(postList)
+			
+		def postfixevaluation(self,expr):  #PostFix Evaluation
+		token=expr.split()
+		for i in token:
+			if i in "0123456789":
+				self.push(int(i))
+			else:
+				op2=self.pop()
+				op1=self.pop()
+				# doMath(i,op1,op2)
+				if i=="*":
+					a=op1*op2
+				elif i=="/":
+					a=op1/op2
+				elif i=="+":
+					a=op1+op2
+				else:
+					a=op1-op2			
+				self.push(a)
+		print(self.stk)		
 						
 					
 st=Istack()
