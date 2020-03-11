@@ -4,8 +4,8 @@ class Istack:
 		self.stk=[]
 		self.limit=limit
 
-	# def is_empty(self):
-		# return len(self.stk)<=0
+	def is_empty(self):
+		return len(self.stk)<=0
 
 	def push(self,item):
 		if len(self.stk)>=self.limit:
@@ -19,7 +19,8 @@ class Istack:
 			return 0
 		else:
 			return self.stk.pop()
-
+	def peek(self):
+		return self.stk[-1]
 	def printstk(self):
 		if len(self.stk)<=0:
 			print("stak is empty")
@@ -37,24 +38,32 @@ class Istack:
 				else:
 					topsym=
 
-	def inifixtopost(inputexp):
+	def inifixtopost(inputexp): #method for infix to postfix conversion
 		prec={}
 		prec["*"]=3
 		prec["/"]=3
 		prec["+"]=2
 		prec["-"]=2
 		prec["("]=1
-		obj=Istack()
-		postList=[]
+# 		postList=[]
 		token=inputexp.split()
 		for i in token:
 			if i in "ABCDEFGHIJKLMNOPQRSTUVWXZ" or i in "0123456789":
 				postList.append(i)
 			elif i=="(":
-				obj.push(i)
+				self.push(i)
 			elif i==")":
-				topToken=obj.pop()
+				topToken=self.pop()
+				while topToken!="(":
+					postList.append(topToken)
+					topToken=self.pop()
 			else:
+				while(not self.is_empty()) and (prec[self.peek()]>=prec[i]):
+					postList.append(self.pop())
+				self.push(i)
+		while not self.is_empty():
+			postList.append(self.pop())
+			print(postList)
 						
 					
 st=Istack()
